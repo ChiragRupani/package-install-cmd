@@ -1,7 +1,7 @@
 {
-  "name": "cgfp",
+  "name": "package-install-cmd",
   "version": "1.0.0",
-  "description": "Lists the dependency and dev dependency in the project",
+  "description": "Lists the dependency and dev dependency in the project and generates commands to install them using npm",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "scripts": {
@@ -9,12 +9,17 @@
     "build": "tsc",
     "start": "tsc && node dist/cli.js",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "deploy-local": "tsc && (npm install -g) && cgfp"
+    "deploy-local": "tsc && (npm install -g) && package-install-cmd"
   },
   "bin": {
-    "cgfp": "./dist/cli.js"
+    "package-install-cmd": "./dist/cli.js",
+    "pic": "./dist/cli.js"
   },
   "author": "Chirag",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/chiragrupani/cgfp.git"
+  },
   "license": "ISC",
   "devDependencies": {
     "@types/node": "^10.5.1",

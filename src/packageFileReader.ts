@@ -77,6 +77,7 @@ export default class PackageFileReader {
         console.log(command.dependencyType + ': ');
         for (let index = 0; index < npmCommands.length; index++) {
           console.log(npmCommands[index]);
+          console.log();
         }
       }
       console.log();
