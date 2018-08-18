@@ -1,8 +1,8 @@
-## Package Install Command generator
+## Package Install Command generator (pic)
 
 Read package.json file and generates npm install commands for installed packages. It generates seperate commands for dev dependency, dependency and types.
 
-Sample Output:
+> Sample Output:
 
 ```
 Generating commands ...

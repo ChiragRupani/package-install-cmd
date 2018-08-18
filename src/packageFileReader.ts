@@ -58,8 +58,8 @@ export default class PackageFileReader {
         obj,
         'devDependencies'
       );
-      let dependencies = PackageFileReader.GetDependencies(obj, 'dependencies');
 
+      let dependencies = PackageFileReader.GetDependencies(obj, 'dependencies');
       alldependency = [devDependencies, dependencies];
     }
     return alldependency;
