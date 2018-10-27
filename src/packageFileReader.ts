@@ -1,6 +1,7 @@
 import * as fs from 'fs';
 import os from 'os';
 import util from 'util';
+import { colors } from './colorFormat';
 import { Commands, DependencyType } from './commands';
 
 const readFile = util.promisify(fs.readFile);
@@ -18,7 +19,11 @@ export default class PackageFileReader {
     return obj;
   }
 
-  static GetDependencies(obj: any, key: string): Commands {
+  static GetDependencies(
+    obj: any,
+    key: string,
+    includeVersion: boolean = false
+  ): Commands {
     let dependencies: string[] = [];
     let typeDependencies: string[] = [];
     let dependencyType: DependencyType;
@@ -35,10 +40,14 @@ export default class PackageFileReader {
     }
 
     Object.keys(obj[key]).map((value, index) => {
+      let dependencyValue = includeVersion
+        ? value + '@' + obj[key][value]
+        : value;
+
       if (value.startsWith('@types')) {
-        typeDependencies.push(value);
+        typeDependencies.push(dependencyValue);
       } else {
-        dependencies.push(value);
+        dependencies.push(dependencyValue);
       }
     });
 
@@ -50,16 +59,23 @@ export default class PackageFileReader {
     message && console.log(message + os.EOL);
   }
 
-  static async GetInstallCommands(): Promise<Commands[]> {
+  static async GetInstallCommands(
+    includeVersion: boolean = false
+  ): Promise<Commands[]> {
     var obj = await PackageFileReader.GetPackageFile();
     let alldependency: Commands[] = [];
     if (obj != null) {
       let devDependencies = PackageFileReader.GetDependencies(
         obj,
-        'devDependencies'
+        'devDependencies',
+        includeVersion
       );
 
-      let dependencies = PackageFileReader.GetDependencies(obj, 'dependencies');
+      let dependencies = PackageFileReader.GetDependencies(
+        obj,
+        'dependencies',
+        includeVersion
+      );
       alldependency = [devDependencies, dependencies];
     }
     return alldependency;
@@ -74,13 +90,13 @@ export default class PackageFileReader {
     commands.forEach(command => {
       let npmCommands = command.DepedencyCommand;
       if (npmCommands.length > 0) {
-        console.log(command.dependencyType + ': ');
+        console.log(colors.cyanUnderscoreFormat, command.dependencyType + ':');
         for (let index = 0; index < npmCommands.length; index++) {
           console.log(npmCommands[index]);
           console.log();
         }
+        console.log();
       }
-      console.log();
     });
   }
 }

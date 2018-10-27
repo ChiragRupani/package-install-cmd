@@ -61,4 +61,23 @@ describe('Verify Depedencies', () => {
     expect(command.Dependency).deep.equals([]);
     expect(command.TypesDependency).deep.equals(['@types/A', '@types/B']);
   });
+
+  it('Verify Dependency Types With Version', () => {
+    // Arrange
+    const packageObject = {
+      dependencies: { '@types/A': '1.0.1', '@types/B': '2.3' }
+    };
+    const key = 'dependencies';
+
+    // Act
+    let command = PackageFileReader.GetDependencies(packageObject, key, true);
+
+    // Assert
+    expect(command.dependencyType).equals('Dependency');
+    expect(command.Dependency).deep.equals([]);
+    expect(command.TypesDependency).deep.equals([
+      '@types/A@1.0.1',
+      '@types/B@2.3'
+    ]);
+  });
 });

@@ -36,6 +36,20 @@ npm install -g <path/to/tgz> # Provide path to tgz file generated in earlier ste
 pic
 ```
 
+Get version details along with packages
+
+```sh
+# Navigate to folder containing package.json and execute below command:
+pic --withversion
+```
+
+OR
+
+```sh
+# Navigate to folder containing package.json and execute below command:
+pic -wv
+```
+
 <hr/>
 
 Usage as Library:
