@@ -5,14 +5,17 @@ Read package.json file and generates npm install commands for installed packages
 > Sample Output:
 
 ```
-Generating commands ...
+[PIC] Generating commands ...
 Dev Dependency:
-npm i -D @angular-devkit/build-angular @angular/cli @angular/compiler-cli @angular/language-service axe-core codelyzer jasmine-core jasmine-spec-reporter karma karma-chrome-launcher karma-coverage-istanbul-reporter karma-jasmine karma-jasmine-html-reporter protractor ts-node tslint typescript
+npm i -D @angular-devkit/build-angular @angular/cli @angular/compiler-cli @angular/language-service codelyzer jasmine-core
+jasmine-spec-reporter karma karma-chrome-launcher karma-coverage-istanbul-reporter karma-jasmine karma-jasmine-html-reporter protractor ts-node tslint typescript
 
-npm i -D @types/jasmine @types/jasminewd2 @types/node
+npm i -D @types/node @types/jasmine @types/jasminewd2
+
 
 Dependency:
-npm i @angular/animations @angular/common @angular/compiler @angular/core @angular/forms @angular/http @angular/platform-browser @angular/platform-browser-dynamic @angular/router @ngrx/effects @ngrx/store bootstrap core-js rxjs zone.js
+npm i @angular/animations @angular/common @angular/compiler @angular/core @angular/forms @angular/platform-browser @angular/platform-browser-dynamic @angular/router core-js rxjs tslib zone.js
+
 
 Done!
 ```
