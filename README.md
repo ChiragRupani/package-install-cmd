@@ -27,8 +27,8 @@ Usage as CLI:
 > Installation
 
 ```sh
-npm build   # Builds the project
-npm pack    # Generate package in tgz format
+npm run build   # Builds the project
+npm pack        # Generate package in tgz format
 npm install -g <path/to/tgz> # Provide path to tgz file generated in earlier step
 ```
 

@@ -8,8 +8,8 @@
     "clean": "rimraf dist/",
     "build": "tsc",
     "start": "tsc && node dist/cli.js",
-    "test": "mocha -r ts-node/register tests/**/*.test.ts",
-    "testWithCoverage": "nyc -r lcov -e .ts -x \"*.test.ts\" mocha -r ts-node/register tests/**/*.test.ts && nyc report",
+    "test": "node node_modules/mocha/bin/mocha -r ts-node/register tests/**/*.test.ts",
+    "testWithCoverage": "nyc -r lcov -e .ts -x \"tests/*.test.ts\" mocha -r ts-node/register tests/**/*.test.ts && nyc report",
     "deploy-local": "tsc && (npm install -g) && package-install-cmd"
   },
   "bin": {
