@@ -1,5 +1,5 @@
 {
-  "name": "package-install-cmd",
+  "name": "@chiragrupani/package-install-cmd",
   "version": "1.0.0",
   "description": "Lists the dependency and dev dependency in the project and generates commands to install them using npm",
   "main": "dist/index.js",
@@ -19,19 +19,22 @@
   "author": "Chirag",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/chiragrupani/cgfp.git"
+    "url": "git://github.com/chiragrupani/package-install-cmd.git"
+  },
+  "publishConfig": {
+    "registry": "https://npm.pkg.github.com/"
   },
   "license": "ISC",
   "devDependencies": {
     "@types/chai": "^4.1.7",
     "@types/mocha": "^5.2.6",
-    "@types/node": "^11.9.4",
+    "@types/node": "^12.0.0",
     "chai": "^4.2.0",
-    "mocha": "^6.0.0",
-    "nyc": "^13.3.0",
+    "mocha": "^6.1.4",
+    "nyc": "^14.1.1",
     "rimraf": "^2.6.3",
-    "ts-node": "^8.0.2",
-    "typescript": "^3.3.3"
+    "ts-node": "^8.1.0",
+    "typescript": "^3.4.5"
   },
   "dependencies": {}
 }
