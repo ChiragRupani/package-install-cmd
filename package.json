@@ -22,19 +22,19 @@
     "url": "git://github.com/chiragrupani/package-install-cmd.git"
   },
   "publishConfig": {
-    "registry": "https://npm.pkg.github.com/"
+    "registry": "https://npm.pkg.github.com/ChiragRupani"
   },
   "license": "ISC",
   "devDependencies": {
-    "@types/chai": "^4.2.0",
+    "@types/chai": "^4.2.2",
     "@types/mocha": "^5.2.7",
-    "@types/node": "^12.7.2",
+    "@types/node": "^12.7.4",
     "chai": "^4.2.0",
     "mocha": "^6.2.0",
     "nyc": "^14.1.1",
     "rimraf": "^3.0.0",
     "ts-node": "^8.3.0",
-    "typescript": "^3.6.2"
+    "typescript": "^3.6.3"
   },
   "dependencies": {}
 }

@@ -7,7 +7,7 @@ trigger:
   - master
 
 pool:
-  vmImage: 'Ubuntu-16.04'
+  vmImage: 'ubuntu-latest'
 
 steps:
   - task: NodeTool@0
@@ -19,5 +19,22 @@ steps:
       npm install
       npm run build
       npm run test
-      npm pack
-    displayName: 'Create Package'
+    displayName: 'npm install, build and test'
+
+  - task: CopyFiles@2
+    inputs:
+      SourceFolder: '$(Build.SourcesDirectory)'
+      Contents: |
+        dist/**
+        LICENSE 
+        package.json
+        README.md
+        .gitignore
+        .npmignore
+      TargetFolder: '$(Build.ArtifactStagingDirectory)'
+
+  - task: PublishBuildArtifacts@1
+    inputs:
+      PathtoPublish: '$(Build.ArtifactStagingDirectory)'
+      ArtifactName: 'drop'
+      publishLocation: 'Container'
