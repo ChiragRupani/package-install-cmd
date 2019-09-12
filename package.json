@@ -22,7 +22,7 @@
     "url": "git://github.com/chiragrupani/package-install-cmd.git"
   },
   "publishConfig": {
-    "registry": "https://npm.pkg.github.com/@ChiragRupani"
+    "registry": "https://npm.pkg.github.com/"
   },
   "license": "ISC",
   "devDependencies": {
