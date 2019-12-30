@@ -1,6 +1,6 @@
 {
   "name": "@chiragrupani/package-install-cmd",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Lists the dependency and dev dependency in the project and generates commands to install them using npm",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -26,15 +26,15 @@
   },
   "license": "ISC",
   "devDependencies": {
-    "@types/chai": "^4.2.2",
+    "@types/chai": "^4.2.7",
     "@types/mocha": "^5.2.7",
-    "@types/node": "^12.7.4",
+    "@types/node": "^13.1.1",
     "chai": "^4.2.0",
-    "mocha": "^6.2.0",
-    "nyc": "^14.1.1",
+    "mocha": "^6.2.2",
+    "nyc": "^15.0.0",
     "rimraf": "^3.0.0",
-    "ts-node": "^8.3.0",
-    "typescript": "^3.6.3"
+    "ts-node": "^8.5.4",
+    "typescript": "^3.7.4"
   },
   "dependencies": {}
 }
