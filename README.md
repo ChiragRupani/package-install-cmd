@@ -1,8 +1,16 @@
-## Package Install Command generator (pic)
+## Package Install Command generator (PIC)
 
 Read package.json file and generates npm install commands for installed packages. It generates seperate commands for dev dependency, dependency and types.
 
-> Sample Output:
+Available in [NPM Registry](https://www.npmjs.com/package/@chiragrupani/package-install-cmd) 🎉
+
+> Installation
+
+```bash
+npm i -g @chiragrupani/package-install-cmd
+```
+
+> Sample Output from Angular project:
 
 ```
 [PIC] Generating commands ...
@@ -23,14 +31,6 @@ Done!
 <hr/>
 
 Usage as CLI:
-
-> Installation
-
-```sh
-npm run build   # Builds the project
-npm pack        # Generate package in tgz format
-npm install -g <path/to/tgz> # Provide path to tgz file generated in earlier step
-```
 
 > Use Command
 
@@ -71,4 +71,15 @@ PackageFileReader.GetInstallCommands()
   .catch(error => {
     console.error(error.message);
   });
+```
+
+## Build from Source
+
+In case if you want to build package from github source
+
+```sh
+# Clone the project
+npm run build   # Builds the project
+npm pack        # Generate package in tgz format
+npm install -g <path/to/tgz> # Provide path to tgz file generated in earlier step
 ```
