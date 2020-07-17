@@ -1,8 +1,12 @@
 ## Package Install Command generator (PIC)
 
+[![npm (scoped)](https://img.shields.io/npm/v/@chiragrupani/package-install-cmd.svg?style=flat-square)](https://www.npmjs.com/package/@chiragrupani/package-install-cmd) [![npm](https://img.shields.io/npm/dt/@chiragrupani/package-install-cmd.svg?style=flat-square)](https://www.npmjs.com/package/@chiragrupani/package-install-cmd)
+
+[![Build Status](https://dev.azure.com/chiragrupani/Package%20Install%20Command/_apis/build/status/ChiragRupani.package-install-cmd?branchName=master)](https://github.com/ChiragRupani/package-install-cmd)
+
 Read package.json file and generates npm install commands for installed packages. It generates seperate commands for dev dependency, dependency and types.
 
-Available in [NPM Registry](https://www.npmjs.com/package/@chiragrupani/package-install-cmd) 🎉
+Available in [NPM Registry](https://www.npmjs.com/package/@chiragrupani/package-install-cmd)
 
 > Installation
 
