@@ -22,6 +22,7 @@ export class Commands {
     if (this.dependencyType == 'Dev Dependency') {
       cmd += '-D ';
     }
+
     let dependenciesCmd = '';
     let typeDependenciesCmd = '';
 

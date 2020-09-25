@@ -3,6 +3,8 @@ import os from 'os';
 import util from 'util';
 import { colors } from './colorFormat';
 import { Commands, DependencyType } from './commands';
+import GetPackageRepo from './GetPackageRepo';
+import packageInfo from './models/packageInfo';
 
 const readFile = util.promisify(fs.readFile);
 
@@ -87,7 +89,7 @@ export default class PackageFileReader {
       return;
     }
 
-    commands.forEach(command => {
+    commands.forEach((command) => {
       let npmCommands = command.DepedencyCommand;
       if (npmCommands.length > 0) {
         console.log(colors.cyanUnderscoreFormat, command.dependencyType + ':');
@@ -98,5 +100,66 @@ export default class PackageFileReader {
         console.log();
       }
     });
+  }
+
+  static sleep = (ms: number) =>
+    new Promise((resolve) => setTimeout(resolve, ms));
+
+  static async doWork(iterator: any) {
+    for (let [index, item] of iterator) {
+      console.log({ index, item });
+      return await item;
+    }
+  }
+
+  static async showPackageInfo(commands: Commands[]) {
+    if (commands.length == 0) {
+      console.log(`No dependencies are installed`);
+      return;
+    }
+
+    let packageInfoRequests: Promise<packageInfo>[] = [];
+
+    commands.forEach((command) => {
+      let npmCommands = command.Dependency;
+
+      if (npmCommands.length > 0) {
+        for (let index = 0; index < npmCommands.length; index++) {
+          let npmPackage = npmCommands[index];
+          let lastIndex = npmPackage.lastIndexOf('@');
+          if (lastIndex < 0) {
+            continue;
+          }
+
+          let name = npmPackage.substring(0, lastIndex);
+          let version = npmPackage.substring(lastIndex + 1);
+          if (
+            version[0] == '^' ||
+            version[0] == '~' ||
+            version[0] == '>' ||
+            version[0] == '<'
+          ) {
+            if (version[1] == '=') {
+              version = version.substring(2);
+            } else {
+              version = version.substring(1);
+            }
+          } else if (version == '*' || version == 'latest') {
+            version = '';
+          }
+
+          packageInfoRequests.push(
+            GetPackageRepo(name, version, command.dependencyType)
+          );
+        }
+      }
+    });
+
+    // const iterator = Array.from(packageInfoRequests).entries();
+    // const workers = new Array(4).fill(iterator).map(this.doWork);
+    // let packageInfo: packageInfo[] = await Promise.all(workers);
+
+    let packageInfo = await Promise.all([...packageInfoRequests]);
+    console.table(packageInfo);
   }
 }
