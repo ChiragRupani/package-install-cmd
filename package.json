@@ -1,17 +1,17 @@
 {
   "name": "@chiragrupani/package-install-cmd",
-  "version": "1.2.4",
+  "version": "2.1.1",
   "description": "Lists the dependency and dev dependency in the project and generates commands to install them using npm",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "scripts": {
     "clean": "rmdir /s /q dist",
-    "build": "tsc",
-    "start": "tsc && node dist/cli.js",
+    "build": "tsc -b",
+    "start": "npm run build && node dist/cli.js",
     "test": "mocha -r ts-node/register tests/**/*.test.ts",
     "coverage": "nyc -t 'coverage/.nyc_output' -r text -r cobertura -e .ts -x \"tests/*.test.ts\" npm run test -- --reporter=mocha-junit-reporter --reporter-options mochaFile=coverage/test-results.xml",
-    "deploy-local": "tsc && (npm install -g) && package-install-cmd",
-    "package": "npm run build & npm pack"
+    "deploy-local": "(npm run package) && (npm install -g) && package-install-cmd",
+    "package": "npm run clean && npm run build && npm pack"
   },
   "bin": {
     "package-install-cmd": "./dist/cli.js",
@@ -34,15 +34,15 @@
   },
   "license": "MIT Based",
   "devDependencies": {
-    "@types/chai": "^4.3.4",
+    "@types/chai": "^4.3.5",
     "@types/mocha": "^10.0.1",
-    "@types/node": "^18.15.11",
+    "@types/node": "^20.2.3",
     "chai": "^4.3.7",
     "mocha": "^10.2.0",
     "mocha-junit-reporter": "^2.2.0",
     "nyc": "^15.1.0",
     "ts-node": "^10.9.1",
-    "typescript": "^5.0.2"
+    "typescript": "^5.0.4"
   },
   "dependencies": {}
 }
