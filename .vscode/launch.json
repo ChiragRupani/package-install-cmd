@@ -5,6 +5,7 @@
   "version": "0.2.0",
   "configurations": [
     {
+      // Needs ts-node
       "name": "Debug File",
       "type": "node",
       "request": "launch",
@@ -17,18 +18,13 @@
     {
       "type": "node",
       "request": "launch",
-      "name": "Mocha Current File",
-      "program": "${workspaceFolder}/node_modules/mocha/bin/_mocha",
-      "args": [
-        "--no-timeouts",
-        "--colors",
-        "${file}",
-        "--require",
-        "ts-node/register"
-      ],
-      "console": "integratedTerminal",
-      "sourceMaps": true,
-      "internalConsoleOptions": "neverOpen"
+      "name": "Vitest Current File",
+      "autoAttachChildProcesses": true,
+      "skipFiles": ["<node_internals>/**", "**/node_modules/**"],
+      "program": "${workspaceRoot}/node_modules/vitest/vitest.mjs",
+      "args": ["run", "${relativeFile}"],
+      "smartStep": true,
+      "console": "integratedTerminal"
     }
   ]
 }

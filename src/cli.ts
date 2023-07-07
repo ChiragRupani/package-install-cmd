@@ -3,7 +3,7 @@ import { colors } from "./colorFormat";
 import { Commands } from "./commands";
 import PackageFileReader from "./packageFileReader";
 
-console.log(colors.GreenFormat, `[PIC 2.1.1] Generating commands ...`);
+console.log(colors.GreenFormat, `[PIC 2.2.1] Generating commands ...`);
 
 // Get process.argv
 let includeVersion = false;
