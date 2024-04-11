@@ -1,11 +1,10 @@
 #!/usr/bin/env node
-import { version } from "../package.json";
 import { colors } from "./colorFormat";
 import { Commands } from "./commands";
 
 import PackageFileReader from "./packageFileReader";
 
-console.log(colors.GreenFormat, `[PIC ${version}] Generating commands ...`);
+console.log(colors.GreenFormat, `[PIC 2.2.2] Generating commands ...`);
 
 // Get process.argv
 let includeVersion = false;
