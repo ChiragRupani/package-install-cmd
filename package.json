@@ -34,10 +34,10 @@
   },
   "license": "MIT Based",
   "devDependencies": {
-    "@types/node": "^20.11.5",
-    "typescript": "^5.3.3",
-    "@vitest/coverage-v8": "^1.2.1",
-    "vitest": "^1.2.1"
+    "@types/node": "^20.12.7",
+    "typescript": "^5.4.5",
+    "@vitest/coverage-v8": "^1.4.0",
+    "vitest": "^1.4.0"
   },
   "dependencies": {}
 }

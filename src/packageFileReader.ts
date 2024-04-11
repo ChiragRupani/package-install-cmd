@@ -7,7 +7,7 @@ import { Commands, DependencyType } from "./commands";
 const readFile = util.promisify(fs.readFile);
 
 export default class PackageFileReader {
-  static async GetPackageFile() {
+  private static async GetPackageFile() {
     var obj = null;
     var data;
     try {
@@ -19,15 +19,15 @@ export default class PackageFileReader {
     return obj;
   }
 
-  static GetDependencies(
+  public static GetDependencies(
     obj: any,
     key: string,
-    includeVersion: boolean = false
+    includeVersion: boolean,
+    listMode: boolean
   ): Commands {
     let dependencies: string[] = [];
     let typeDependencies: string[] = [];
     let dependencyType: DependencyType;
-    let commandObj;
 
     if (key.startsWith("dev")) {
       dependencyType = "Dev Dependency";
@@ -40,9 +40,17 @@ export default class PackageFileReader {
     }
 
     Object.keys(obj[key]).map((value, index) => {
-      let dependencyValue = includeVersion
-        ? value + "@" + obj[key][value]
-        : value;
+      let dependencyValue;
+
+      if (listMode) {
+        dependencyValue = includeVersion
+          ? value + " ".repeat(6) + obj[key][value]
+          : value;
+      } else {
+        dependencyValue = includeVersion
+          ? value + "@" + obj[key][value]
+          : value;
+      }
 
       if (value.startsWith("@types")) {
         typeDependencies.push(dependencyValue);
@@ -51,16 +59,21 @@ export default class PackageFileReader {
       }
     });
 
-    commandObj = new Commands(dependencies, typeDependencies, dependencyType);
+    let commandObj = new Commands(
+      dependencies,
+      typeDependencies,
+      dependencyType
+    );
     return commandObj;
   }
 
-  static Log(message: any): void {
+  private static Log(message: any): void {
     message && console.log(message + os.EOL);
   }
 
-  static async GetInstallCommands(
-    includeVersion: boolean = false
+  public static async GetInstallCommands(
+    includeVersion: boolean,
+    listMode: boolean
   ): Promise<Commands[]> {
     var obj = await PackageFileReader.GetPackageFile();
     let alldependency: Commands[] = [];
@@ -68,13 +81,15 @@ export default class PackageFileReader {
       let devDependencies = PackageFileReader.GetDependencies(
         obj,
         "devDependencies",
-        includeVersion
+        includeVersion,
+        listMode
       );
 
       let dependencies = PackageFileReader.GetDependencies(
         obj,
         "dependencies",
-        includeVersion
+        includeVersion,
+        listMode
       );
       alldependency = [devDependencies, dependencies];
     }
