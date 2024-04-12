@@ -1,31 +1,40 @@
 #!/usr/bin/env node
+import * as fs from "fs";
+import path from "path";
 import { colors } from "./colorFormat";
 import { Commands } from "./commands";
-
 import PackageFileReader from "./packageFileReader";
 
-console.log(colors.GreenFormat, `[PIC 2.2.2] Generating commands ...`);
+const packageJson = JSON.parse(
+  fs.readFileSync(path.join(__dirname, "..", "package.json"), "utf8")
+);
 
-// Get process.argv
+let version = packageJson.version;
+
+console.log(colors.GreenFormat, `[PIC ${version}] Generating commands ...`);
+
+let args = process.argv;
 let includeVersion = false;
-if (process.argv.length > 2) {
-  let versionArg = process.argv[2].toUpperCase();
-  if (versionArg == "--WithVersion".toUpperCase() || versionArg == "-WV") {
-    includeVersion = true;
-  }
-}
-
 let listMode = false;
-if (process.argv.length > 3) {
-  let versionArg = process.argv[3].toUpperCase();
-  if (versionArg == "--list".toUpperCase() || versionArg == "-l") {
+
+for (var i = 0; i < args.length; i++) {
+  var arg = args[i];
+  if (
+    arg.toUpperCase() === "--WithVersion".toUpperCase() ||
+    arg.toUpperCase() == "-WV"
+  ) {
+    includeVersion = true;
+  } else if (
+    arg.toUpperCase() == "--list".toUpperCase() ||
+    arg.toUpperCase() == "-L"
+  ) {
     listMode = true;
   }
 }
 
 PackageFileReader.GetInstallCommands(includeVersion, listMode)
   .then((alldependency: Commands[]) => {
-    PackageFileReader.DisplayDependency(alldependency);
+    PackageFileReader.DisplayDependency(alldependency, listMode);
   })
   .then(() => console.log(colors.GreenFormat, "Done!"))
   .catch((error) => {

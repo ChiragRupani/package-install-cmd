@@ -57,6 +57,27 @@ OR
 pic -wv
 ```
 
+Get output in list format
+
+```sh
+# Navigate to folder containing package.json and execute below command:
+pic --withversion --list
+```
+
+or
+
+```sh
+# Navigate to folder containing package.json and execute below command, if version is not required:
+pic --list
+```
+
+OR
+
+```sh
+# Navigate to folder containing package.json and execute below command:
+pic -l
+```
+
 <hr/>
 
 Usage as Library:

@@ -44,7 +44,7 @@ export default class PackageFileReader {
 
       if (listMode) {
         dependencyValue = includeVersion
-          ? value + " ".repeat(6) + obj[key][value]
+          ? value.padEnd(50, " ") + obj[key][value]
           : value;
       } else {
         dependencyValue = includeVersion
@@ -96,19 +96,23 @@ export default class PackageFileReader {
     return alldependency;
   }
 
-  public static DisplayDependency(commands: Commands[]) {
+  public static DisplayDependency(commands: Commands[], listMode: boolean) {
     if (commands.length == 0) {
       console.log(`No dependencies are installed`);
       return;
     }
 
     commands.forEach((command) => {
-      let npmCommands = command.DependencyCommand;
+      let npmCommands = listMode
+        ? command.ListDependencyCommand
+        : command.DependencyCommand;
       if (npmCommands.length > 0) {
         console.log(colors.cyanUnderscoreFormat, command.dependencyType + ":");
         for (let index = 0; index < npmCommands.length; index++) {
           console.log(npmCommands[index]);
-          console.log();
+          if (!listMode) {
+            console.log();
+          }
         }
         console.log();
       }

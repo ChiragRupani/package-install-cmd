@@ -1,6 +1,6 @@
 {
   "name": "@chiragrupani/package-install-cmd",
-  "version": "2.2.2",
+  "version": "2.2.3",
   "description": "Lists the dependency and dev dependency in the project and generates commands to install them using npm",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",

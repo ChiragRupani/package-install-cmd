@@ -1,3 +1,4 @@
+import os from "os";
 export type DependencyType = "Dev Dependency" | "Dependency";
 
 export class Commands {
@@ -32,6 +33,22 @@ export class Commands {
 
     if (this.TypesDependency.length > 0) {
       typeDependenciesCmd = cmd + this.TypesDependency.join(" ");
+      commands.push(typeDependenciesCmd);
+    }
+
+    return commands;
+  }
+
+  get ListDependencyCommand(): string[] {
+    let commands: string[] = [];
+
+    if (this.Dependency.length > 0) {
+      let dependenciesCmd = this.Dependency.join(os.EOL);
+      commands.push(dependenciesCmd);
+    }
+
+    if (this.TypesDependency.length > 0) {
+      let typeDependenciesCmd = this.TypesDependency.join(os.EOL);
       commands.push(typeDependenciesCmd);
     }
 
