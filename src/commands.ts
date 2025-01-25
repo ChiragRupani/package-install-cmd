@@ -1,57 +1,183 @@
-import os from "os";
-export type DependencyType = "Dev Dependency" | "Dependency";
+import os from "node:os";
+import { colors } from "./colorFormat.ts";
+import {
+  Dependencies,
+  DependencyInfo,
+  DependencyType,
+  npmCommand,
+} from "./models.ts";
 
 export class Commands {
-  public Dependency: string[];
-  public TypesDependency: string[];
-  public dependencyType: DependencyType;
+  public static GetDependencyCommand(
+    alldependency: Dependencies,
+    listMode: boolean,
+    includeVersion: boolean
+  ): npmCommand[] {
+    let result: npmCommand[] = [];
+    let maxLength = 0;
+    if (listMode) {
+      maxLength = Math.max(
+        maxLength,
+        Commands.GetMaxLength(alldependency.DevDependency)
+      );
+      maxLength = Math.max(
+        maxLength,
+        Commands.GetMaxLength(alldependency.Dependency)
+      );
 
-  constructor(
-    dependency: string[] = [],
-    typesDependency: string[] = [],
-    type: DependencyType
+      maxLength += 20;
+    }
+
+    if (alldependency.DevDependency.length > 0) {
+      let installCommand = "npm i -D ";
+
+      const packageCommands = Commands.GetDisplayDependencyAndTypes(
+        alldependency.DevDependency,
+        listMode,
+        includeVersion,
+        installCommand,
+        "Dev Dependency",
+        maxLength
+      );
+
+      result.push(...packageCommands);
+    }
+
+    if (alldependency.Dependency.length > 0) {
+      let installCommand = "npm i ";
+
+      const packageCommands = Commands.GetDisplayDependencyAndTypes(
+        alldependency.Dependency,
+        listMode,
+        includeVersion,
+        installCommand,
+        "Dependency",
+        maxLength
+      );
+
+      result.push(...packageCommands);
+    }
+
+    return result;
+  }
+
+  private static GetDisplayDependencyAndTypes(
+    dependencyInfo: DependencyInfo[],
+    listMode: boolean,
+    includeVersion: boolean,
+    installCommand: string,
+    dependencyType: DependencyType,
+    maxLengthForListName: number
+  ): npmCommand[] {
+    let packageCommands: npmCommand[] = [];
+
+    let dependencyWithoutType = dependencyInfo
+      .filter((x) => !x.isTypeDependency)
+      .map((dependency) => {
+        return Commands.GetDisplayDependency(
+          listMode,
+          includeVersion,
+          dependency,
+          maxLengthForListName
+        );
+      })
+      .join(listMode ? os.EOL : " ");
+
+    if (dependencyWithoutType.length > 0) {
+      packageCommands.push({
+        packages: dependencyWithoutType,
+        installCommand,
+        dependencyType,
+        isTypes: false,
+      });
+    }
+
+    let dependencyWithType = dependencyInfo
+      .filter((x) => x.isTypeDependency)
+      .map((dependency) => {
+        return Commands.GetDisplayDependency(
+          listMode,
+          includeVersion,
+          dependency,
+          maxLengthForListName
+        );
+      })
+      .join(listMode ? os.EOL : " ");
+
+    if (dependencyWithType.length > 0) {
+      packageCommands.push({
+        packages: dependencyWithType,
+        installCommand,
+        dependencyType,
+        isTypes: true,
+      });
+    }
+
+    return packageCommands;
+  }
+
+  private static GetDisplayDependency(
+    listMode: boolean,
+    includeVersion: boolean,
+    dependency: DependencyInfo,
+    maxLengthForListName: number
   ) {
-    this.Dependency = dependency = null ? [] : dependency;
-    this.TypesDependency = typesDependency = null ? [] : typesDependency;
-    this.dependencyType = type;
+    let displayDependency;
+    if (listMode) {
+      displayDependency = includeVersion
+        ? dependency.name.padEnd(maxLengthForListName) +
+          " " +
+          dependency.version
+        : dependency.name;
+    } else {
+      displayDependency = includeVersion
+        ? dependency.name + "@" + dependency.version
+        : dependency.name;
+    }
+
+    return displayDependency;
   }
 
-  get DependencyCommand(): string[] {
-    let cmd = "npm i ";
-    let commands: string[] = [];
-
-    if (this.dependencyType == "Dev Dependency") {
-      cmd += "-D ";
-    }
-    let dependenciesCmd = "";
-    let typeDependenciesCmd = "";
-
-    if (this.Dependency.length > 0) {
-      dependenciesCmd = cmd + this.Dependency.join(" ");
-      commands.push(dependenciesCmd);
+  private static GetMaxLength(dependencyInfo: DependencyInfo[]): number {
+    let maxLength = 0;
+    for (let dependency of dependencyInfo) {
+      maxLength = Math.max(maxLength, dependency.name.length);
     }
 
-    if (this.TypesDependency.length > 0) {
-      typeDependenciesCmd = cmd + this.TypesDependency.join(" ");
-      commands.push(typeDependenciesCmd);
-    }
-
-    return commands;
+    return maxLength;
   }
 
-  get ListDependencyCommand(): string[] {
-    let commands: string[] = [];
-
-    if (this.Dependency.length > 0) {
-      let dependenciesCmd = this.Dependency.join(os.EOL);
-      commands.push(dependenciesCmd);
+  public static DisplayDependency(
+    commands: npmCommand[],
+    listMode: boolean
+  ): void {
+    if (commands.length == 0) {
+      console.log(colors.Yellow, `No dependencies are installed`);
+      return;
     }
 
-    if (this.TypesDependency.length > 0) {
-      let typeDependenciesCmd = this.TypesDependency.join(os.EOL);
-      commands.push(typeDependenciesCmd);
-    }
+    for (let command of commands) {
+      console.log(
+        colors.GreenUnderscoreFormat,
+        command.dependencyType + (command.isTypes ? " (@types)" : "") + ":"
+      );
 
-    return commands;
+      if (listMode) {
+        let index = 0;
+        let packages = command.packages.split(os.EOL);
+        for (let currentPackage of packages) {
+          console.log(
+            index % 2 == 0 ? colors.LightBlue : colors.LightCyan,
+            currentPackage
+          );
+
+          index++;
+        }
+      } else {
+        console.log(command.installCommand + command.packages);
+      }
+
+      console.log();
+    }
   }
 }

@@ -1,2 +1,5 @@
-export { Commands, DependencyType } from './commands';
-export * from './packageFileReader';
+export { PackageFileReader } from "./packageFileReader";
+
+export { Commands } from "./commands";
+
+export * from "./models";

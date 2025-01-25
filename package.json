@@ -1,21 +1,34 @@
 {
   "name": "@chiragrupani/package-install-cmd",
-  "version": "2.2.3",
+  "version": "3.0.0",
   "description": "Lists the dependency and dev dependency in the project and generates commands to install them using npm",
-  "main": "dist/index.js",
+  "main": "dist/index.cjs.js",
+  "module": "dist/index.es.js",
   "types": "dist/index.d.ts",
+  "type": "module",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.es.js",
+      "require": "./dist/index.cjs.js"
+    },
+    "./cli": {
+      "types": "./dist/cli.d.ts",
+      "import": "./dist/cli.es.js",
+      "require": "./dist/cli.cjs.js"
+    }
+  },
   "scripts": {
-    "clean": "rmdir /s /q dist",
-    "build": "tsc -b",
-    "start": "npm run build && node dist/cli.js",
-    "test": "vitest run",
+    "build": "vite build && tsc -b",
+    "start": "npm run build && node dist/cli.es.js",
+    "test": "vitest",
     "coverage": "vitest run --coverage",
     "deploy-local": "(npm run package) && (npm install -g) && package-install-cmd",
-    "package": "npm run clean && npm run build && npm pack"
+    "package": "npm run build && npm pack"
   },
   "bin": {
-    "package-install-cmd": "./dist/cli.js",
-    "pic": "./dist/cli.js"
+    "package-install-cmd": "./dist/cli.es.js",
+    "pic": "./dist/cli.es.js"
   },
   "author": "Chirag",
   "repository": {
@@ -34,10 +47,16 @@
   },
   "license": "MIT Based",
   "devDependencies": {
-    "@types/node": "^22.10.7",
+    "@types/node": "^22.10.10",
+    "@vitest/coverage-v8": "^3.0.4",
     "typescript": "^5.7.3",
-    "@vitest/coverage-v8": "^3.0.3",
-    "vitest": "^3.0.3"
+    "vite": "^6.0.11",
+    "vitest": "^3.0.4"
   },
-  "dependencies": {}
+  "devEngines": {
+    "runtime": {
+      "name": "node",
+      "onFail": "error"
+    }
+  }
 }

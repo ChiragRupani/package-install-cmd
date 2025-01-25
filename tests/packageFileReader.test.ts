@@ -1,153 +1,85 @@
-import { describe, expect, it } from "vitest";
-import PackageFileReader from "../src/packageFileReader";
+import { describe, expect, test } from "vitest";
+import { PackageFileReader } from "../src/packageFileReader";
 
 describe("Verify Depedencies", () => {
-  it("Verify Dev Dependency", () => {
+  test("Verify Dev Dependency", async () => {
     // Arrange
-    const packageObject = { devDependencies: { A: "1.0.1", B: "2.3" } };
-    const key = "devDependencies";
+    const mockPackageFile = { devDependencies: { A: "1.0.1", B: "2.3" } };
+
+    PackageFileReader["GetPackageFile"] = () =>
+      Promise.resolve(mockPackageFile);
 
     // Act
-    let command = PackageFileReader.GetDependencies(
-      packageObject,
-      key,
-      false,
-      false
-    );
+    let command = await PackageFileReader.GetPackageInstallCommands();
 
     // Assert
-    expect(command.dependencyType).equals("Dev Dependency");
-    expect(command.Dependency).deep.equals(["A", "B"]);
-    expect(command.TypesDependency).deep.equals([]);
+    expect(command).toEqual({
+      DevDependency: [
+        { name: "A", version: "1.0.1", isTypeDependency: false },
+        { name: "B", version: "2.3", isTypeDependency: false },
+      ],
+      Dependency: [],
+    });
   });
 
-  it("Verify Dev Dependency Types", () => {
+  test("Verify Dev Dependency Types", async () => {
     // Arrange
-    const packageObject = {
+    const mockPackageFile = {
       devDependencies: { "@types/A": "1.0.1", "@types/B": "2.3" },
     };
-    const key = "devDependencies";
+    PackageFileReader["GetPackageFile"] = () =>
+      Promise.resolve(mockPackageFile);
 
     // Act
-    let command = PackageFileReader.GetDependencies(
-      packageObject,
-      key,
-      false,
-      false
-    );
+    let command = await PackageFileReader.GetPackageInstallCommands();
 
     // Assert
-    expect(command.dependencyType).equals("Dev Dependency");
-    expect(command.Dependency).deep.equals([]);
-    expect(command.TypesDependency).deep.equals(["@types/A", "@types/B"]);
+    expect(command).toEqual({
+      DevDependency: [
+        { name: "@types/A", version: "1.0.1", isTypeDependency: true },
+        { name: "@types/B", version: "2.3", isTypeDependency: true },
+      ],
+      Dependency: [],
+    });
   });
 
-  it("Verify Dependency", () => {
+  test("Verify Dependency", async () => {
     // Arrange
-    const packageObject = { dependencies: { A: "1.0.1", B: "2.3" } };
-    const key = "dependencies";
+    const mockPackageFile = { dependencies: { A: "1.0.1", B: "2.3" } };
+    PackageFileReader["GetPackageFile"] = () =>
+      Promise.resolve(mockPackageFile);
 
     // Act
-    let command = PackageFileReader.GetDependencies(
-      packageObject,
-      key,
-      false,
-      false
-    );
+    let command = await PackageFileReader.GetPackageInstallCommands();
 
     // Assert
-    expect(command.dependencyType).equals("Dependency");
-    expect(command.Dependency).deep.equals(["A", "B"]);
-    expect(command.TypesDependency).deep.equals([]);
+    expect(command).toEqual({
+      Dependency: [
+        { name: "A", version: "1.0.1", isTypeDependency: false },
+        { name: "B", version: "2.3", isTypeDependency: false },
+      ],
+      DevDependency: [],
+    });
   });
 
-  it("Verify dependencies in list mode", () => {
+  test("Verify dependency type", async () => {
     // Arrange
-    const packageObject = { dependencies: { A: "1.0.1", B: "2.3" } };
-    const key = "dependencies";
-
-    // Act
-    let command = PackageFileReader.GetDependencies(
-      packageObject,
-      key,
-      false,
-      true
-    );
-
-    // Assert
-    expect(command.dependencyType).equals("Dependency");
-    expect(command.Dependency).deep.equals(["A", "B"]);
-    expect(command.TypesDependency).deep.equals([]);
-  });
-
-  it("Verify Dependency Types", () => {
-    // Arrange
-    const packageObject = {
+    const mockPackageFile = {
       dependencies: { "@types/A": "1.0.1", "@types/B": "2.3" },
     };
-    const key = "dependencies";
+    PackageFileReader["GetPackageFile"] = () =>
+      Promise.resolve(mockPackageFile);
 
     // Act
-    let command = PackageFileReader.GetDependencies(
-      packageObject,
-      key,
-      false,
-      false
-    );
+    let command = await PackageFileReader.GetPackageInstallCommands();
 
     // Assert
-    expect(command.dependencyType).equals("Dependency");
-    expect(command.Dependency).deep.equals([]);
-    expect(command.TypesDependency).deep.equals(["@types/A", "@types/B"]);
-  });
-
-  it("Verify Dependency Types With Version", () => {
-    // Arrange
-    const packageObject = {
-      dependencies: { "@types/A": "1.0.1", "@types/B": "2.3" },
-    };
-    const key = "dependencies";
-
-    // Act
-    let command = PackageFileReader.GetDependencies(
-      packageObject,
-      key,
-      true,
-      false
-    );
-
-    // Assert
-    expect(command.dependencyType).equals("Dependency");
-    expect(command.Dependency).deep.equals([]);
-    expect(command.TypesDependency).deep.equals([
-      "@types/A@1.0.1",
-      "@types/B@2.3",
-    ]);
-  });
-
-  it("Verify Dependency Types With list and version", () => {
-    // Arrange
-    const packageObject = {
-      dependencies: { "@types/A": "1.0.1", "@types/B": "2.3" },
-    };
-    const key = "dependencies";
-
-    // Act
-    let command = PackageFileReader.GetDependencies(
-      packageObject,
-      key,
-      true,
-      true
-    );
-
-    let expected = ["@types/A 1.0.1", "@types/B 2.3"];
-    let replaceSpaces = (x: string) => x.replace(/  +/g, " ");
-
-    // Assert
-    expect(command.dependencyType).equals("Dependency");
-    expect(command.Dependency).deep.equals([]);
-    expect(command.TypesDependency.map(replaceSpaces)).deep.equals(
-      expected.map(replaceSpaces)
-    );
+    expect(command).toEqual({
+      Dependency: [
+        { name: "@types/A", version: "1.0.1", isTypeDependency: true },
+        { name: "@types/B", version: "2.3", isTypeDependency: true },
+      ],
+      DevDependency: [],
+    });
   });
 });

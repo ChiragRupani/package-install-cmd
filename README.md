@@ -80,22 +80,28 @@ pic -l
 
 <hr/>
 
-Usage as Library:
+Usage as Library (Meant for NodeJS and not browser):
 
 ```TypeScript
 import {
-  Commands,
-  DependencyType,
-  PackageFileReader
-} from 'package-install-cmd';
+  Dependencies,
+  DependencyInfo,
+  PackageFileReader,
+} from "@chiragrupani/package-install-cmd";
 
-PackageFileReader.GetInstallCommands()
-  .then((alldependency: Commands[]) => {
-    PackageFileReader.DisplayDependency(alldependency);
-  })
-  .catch(error => {
-    console.error(error.message);
-  });
+try {
+  const allDependency = await PackageFileReader.GetPackageInstallCommands();
+  console.log(allDependency.Dependency);
+  console.log(allDependency.DevDependency);
+} catch (error) {
+  console.error(error);
+}
+```
+
+Sample Output:
+
+```bash
+[{ name: 'typescript', version: '~5.7.3', isTypeDependency: false }]
 ```
 
 ## Build from Source
@@ -104,7 +110,7 @@ In case if you want to build package from github source
 
 ```sh
 # Clone the project
-npm run build   # Builds the project
-npm pack        # Generate package in tgz format
-npm install -g <path/to/tgz> # Provide path to tgz file generated in earlier step
+npm run build                       # Builds the project
+npm run package                     # Generate package in tgz format
+npm install -g <path/to/tgz>        # Provide path to tgz file generated in earlier step
 ```
