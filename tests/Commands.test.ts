@@ -1,3 +1,4 @@
+import os from "node:os";
 import { describe, expect, test } from "vitest";
 import { Commands } from "../src/commands";
 import { Dependencies } from "../src/models";
@@ -121,6 +122,6 @@ describe("Verify Commands", () => {
     // Assert
     expect(
       commands.map((x) => x.packages).map((x) => x.replace(/[ \t]+/g, " "))
-    ).toEqual(["D 7.2", "@types/C 6", "A 1.1\r\nB 2.1"]);
+    ).toEqual(["D 7.2", "@types/C 6", "A 1.1" + os.EOL + "B 2.1"]);
   });
 });
