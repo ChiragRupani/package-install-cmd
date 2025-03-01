@@ -37,5 +37,6 @@ export default defineConfig({
     },
     reporters: ["default", "junit"],
     outputFile: { junit: "coverage/test-results.xml" },
+    pool: "threads",  
   },
 });
