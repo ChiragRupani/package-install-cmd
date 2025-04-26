@@ -5,6 +5,7 @@ import { defineConfig } from "vitest/config";
 const __dirname = dirname(fileURLToPath(import.meta.url));
 
 export default defineConfig({
+  experimental: { enableNativePlugin: true },
   build: {
     lib: {
       entry: [
@@ -18,7 +19,7 @@ export default defineConfig({
     rollupOptions: {
       // https://rollupjs.org/configuration-options/
       output: {
-        minifyInternalExports: false,
+        minify: false,
         globals: {
           "node:fs": "fs",
           "node:os": "os",
@@ -26,7 +27,6 @@ export default defineConfig({
         },
       },
       external: (id) => !(isAbsolute(id) || id.startsWith(".")),
-      treeshake: "safest",
     },
     minify: false,
   },
@@ -37,6 +37,6 @@ export default defineConfig({
     },
     reporters: ["default", "junit"],
     outputFile: { junit: "coverage/test-results.xml" },
-    pool: "threads",  
+    pool: "threads",
   },
 });
