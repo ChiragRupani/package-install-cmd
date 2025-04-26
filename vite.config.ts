@@ -5,7 +5,7 @@ import { defineConfig } from "vitest/config";
 const __dirname = dirname(fileURLToPath(import.meta.url));
 
 export default defineConfig({
-  experimental: { enableNativePlugin: true },
+  //experimental: { enableNativePlugin: true },
   build: {
     lib: {
       entry: [
