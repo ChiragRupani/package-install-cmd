@@ -62,7 +62,8 @@
     "allowImportingTsExtensions": true,
     "emitDeclarationOnly": true,
     "isolatedDeclarations": true,
-    "tsBuildInfoFile": "./node_modules/.tmp/tsconfig.node.tsbuildinfo"
+    "tsBuildInfoFile": "./node_modules/.tmp/tsconfig.node.tsbuildinfo",
+    "types": ["node"]
   },
   "include": ["src/**/*"]
 }
