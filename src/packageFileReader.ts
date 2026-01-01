@@ -11,6 +11,7 @@ export class PackageFileReader {
     try {
       data = await readFile("package.json", "utf8");
     } catch (err) {
+      console.log(err);
       throw err;
     }
     obj = JSON.parse(data);

@@ -7,9 +7,7 @@ import { Commands } from "./commands.ts";
 import { PackageFileReader } from "./packageFileReader.ts";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
-const packageJson = JSON.parse(
-  fs.readFileSync(path.join(__dirname, "..", "package.json"), "utf8")
-);
+const packageJson = JSON.parse(fs.readFileSync(path.join(__dirname, "..", "package.json"), "utf8"));
 
 let version = packageJson.version;
 
@@ -41,26 +39,16 @@ function run() {
   console.log(colors.Green, `[PIC ${version}] Generating commands ...`);
   for (var i = 0; i < args.length; i++) {
     var arg = args[i];
-    if (
-      arg.toUpperCase() === "--WithVersion".toUpperCase() ||
-      arg.toUpperCase() == "-WV"
-    ) {
+    if (arg.toUpperCase() === "--WithVersion".toUpperCase() || arg.toUpperCase() == "-WV") {
       includeVersion = true;
-    } else if (
-      arg.toUpperCase() == "--list".toUpperCase() ||
-      arg.toUpperCase() == "-L"
-    ) {
+    } else if (arg.toUpperCase() == "--list".toUpperCase() || arg.toUpperCase() == "-L") {
       listMode = true;
     }
   }
 
   PackageFileReader.GetPackageInstallCommands()
     .then((alldependency) => {
-      let npmCommands = Commands.GetDependencyCommand(
-        alldependency,
-        listMode,
-        includeVersion
-      );
+      let npmCommands = Commands.GetDependencyCommand(alldependency, listMode, includeVersion);
       Commands.DisplayDependency(npmCommands, listMode);
     })
     .then(() => console.log(colors.Green, "Done!"))

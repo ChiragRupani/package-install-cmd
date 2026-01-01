@@ -8,15 +8,12 @@ export default defineConfig({
   experimental: { enableNativePlugin: true },
   build: {
     lib: {
-      entry: [
-        resolve(__dirname, "src/index.ts"),
-        resolve(__dirname, "src/cli.ts"),
-      ],
+      entry: [resolve(__dirname, "src/index.ts"), resolve(__dirname, "src/cli.ts")],
       name: "index",
       fileName: (format, entryName) => `${entryName}.${format}.js`,
       formats: ["es", "cjs"],
     },
-    rollupOptions: {
+    rolldownOptions: {
       // https://rollupjs.org/configuration-options/
       output: {
         minify: false,
