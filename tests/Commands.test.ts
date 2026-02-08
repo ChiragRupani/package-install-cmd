@@ -61,9 +61,7 @@ describe("Verify Commands", () => {
     // Arrange
     const alldependency: Dependencies = {
       Dependency: [],
-      DevDependency: [
-        { name: "@types/A", version: "1.1", isTypeDependency: true },
-      ],
+      DevDependency: [{ name: "@types/A", version: "1.1", isTypeDependency: true }],
     };
 
     // Act
@@ -84,9 +82,7 @@ describe("Verify Commands", () => {
     // Arrange
     const alldependency: Dependencies = {
       DevDependency: [],
-      Dependency: [
-        { name: "@types/A", version: "1.1", isTypeDependency: true },
-      ],
+      Dependency: [{ name: "@types/A", version: "1.1", isTypeDependency: true }],
     };
 
     // Act
@@ -120,8 +116,10 @@ describe("Verify Commands", () => {
     const commands = Commands.GetDependencyCommand(alldependency, true, true);
 
     // Assert
-    expect(
-      commands.map((x) => x.packages).map((x) => x.replace(/[ \t]+/g, " "))
-    ).toEqual(["D 7.2", "@types/C 6", "A 1.1" + os.EOL + "B 2.1"]);
+    expect(commands.map((x) => x.packages).map((x) => x.replace(/[ \t]+/g, " "))).toEqual([
+      "D 7.2",
+      "@types/C 6",
+      "A 1.1" + os.EOL + "B 2.1",
+    ]);
   });
 });

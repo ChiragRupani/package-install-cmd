@@ -6,8 +6,7 @@ describe("Verify Depedencies", () => {
     // Arrange
     const mockPackageFile = { devDependencies: { A: "1.0.1", B: "2.3" } };
 
-    PackageFileReader["GetPackageFile"] = () =>
-      Promise.resolve(mockPackageFile);
+    PackageFileReader["GetPackageFile"] = () => Promise.resolve(mockPackageFile);
 
     // Act
     let command = await PackageFileReader.GetPackageInstallCommands();
@@ -27,8 +26,7 @@ describe("Verify Depedencies", () => {
     const mockPackageFile = {
       devDependencies: { "@types/A": "1.0.1", "@types/B": "2.3" },
     };
-    PackageFileReader["GetPackageFile"] = () =>
-      Promise.resolve(mockPackageFile);
+    PackageFileReader["GetPackageFile"] = () => Promise.resolve(mockPackageFile);
 
     // Act
     let command = await PackageFileReader.GetPackageInstallCommands();
@@ -46,8 +44,7 @@ describe("Verify Depedencies", () => {
   test("Verify Dependency", async () => {
     // Arrange
     const mockPackageFile = { dependencies: { A: "1.0.1", B: "2.3" } };
-    PackageFileReader["GetPackageFile"] = () =>
-      Promise.resolve(mockPackageFile);
+    PackageFileReader["GetPackageFile"] = () => Promise.resolve(mockPackageFile);
 
     // Act
     let command = await PackageFileReader.GetPackageInstallCommands();
@@ -67,8 +64,7 @@ describe("Verify Depedencies", () => {
     const mockPackageFile = {
       dependencies: { "@types/A": "1.0.1", "@types/B": "2.3" },
     };
-    PackageFileReader["GetPackageFile"] = () =>
-      Promise.resolve(mockPackageFile);
+    PackageFileReader["GetPackageFile"] = () => Promise.resolve(mockPackageFile);
 
     // Act
     let command = await PackageFileReader.GetPackageInstallCommands();

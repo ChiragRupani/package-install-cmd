@@ -2,10 +2,27 @@
   "name": "@chiragrupani/package-install-cmd",
   "version": "3.1.0",
   "description": "Lists the dependency and dev dependency in the project and generates commands to install them using npm",
+  "keywords": [
+    "list dependencies",
+    "package install cmd",
+    "package install command",
+    "packages",
+    "pic"
+  ],
+  "license": "MIT Based",
+  "author": "Chirag",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/chiragrupani/package-install-cmd.git"
+  },
+  "bin": {
+    "package-install-cmd": "./dist/cli.es.js",
+    "pic": "./dist/cli.es.js"
+  },
+  "type": "module",
   "main": "dist/index.cjs.js",
   "module": "dist/index.es.js",
   "types": "dist/index.d.ts",
-  "type": "module",
   "exports": {
     ".": {
       "types": "./dist/index.d.ts",
@@ -18,6 +35,9 @@
       "require": "./dist/cli.cjs.js"
     }
   },
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org/"
+  },
   "scripts": {
     "build": "vite build && tsc -b",
     "start": "npm run build && node dist/cli.es.js",
@@ -27,26 +47,6 @@
     "deploy-local": "(npm run package) && (npm install -g) && package-install-cmd",
     "package": "npm run build && npm pack"
   },
-  "bin": {
-    "package-install-cmd": "./dist/cli.es.js",
-    "pic": "./dist/cli.es.js"
-  },
-  "author": "Chirag",
-  "repository": {
-    "type": "git",
-    "url": "git://github.com/chiragrupani/package-install-cmd.git"
-  },
-  "keywords": [
-    "pic",
-    "package install cmd",
-    "package install command",
-    "list dependencies",
-    "packages"
-  ],
-  "publishConfig": {
-    "registry": "https://registry.npmjs.org/"
-  },
-  "license": "MIT Based",
   "devDependencies": {
     "@types/node": "^25.2.2",
     "@vitest/coverage-v8": "^4.0.18",
@@ -57,7 +57,7 @@
     "vitest": "^4.0.18"
   },
   "overrides": {
-     "vite": "8.0.0-beta.13"
+    "vite": "8.0.0-beta.13"
   },
   "devEngines": {
     "runtime": {
