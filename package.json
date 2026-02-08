@@ -48,17 +48,16 @@
   },
   "license": "MIT Based",
   "devDependencies": {
-    "@types/node": "^25.0.3",
-    "@vitest/coverage-v8": "^4.0.16",
-    "oxfmt": "^0.21.0",
-    "oxlint": "^1.36.0",
-    "oxlint-tsgolint": "^0.10.0",
+    "@types/node": "^25.2.2",
+    "@vitest/coverage-v8": "^4.0.18",
+    "oxlint": "^1.43.0",
+    "oxlint-tsgolint": "^0.11.5",
     "typescript": "^5.9.3",
-    "vite": "8.0.0-beta.5",
-    "vitest": "^4.0.16"
+    "vite": "8.0.0-beta.13",
+    "vitest": "^4.0.18"
   },
   "overrides": {
-     "vite": "8.0.0-beta.5"
+     "vite": "8.0.0-beta.13"
   },
   "devEngines": {
     "runtime": {
