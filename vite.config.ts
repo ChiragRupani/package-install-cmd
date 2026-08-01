@@ -5,7 +5,6 @@ import { defineConfig } from "vitest/config";
 const __dirname = dirname(fileURLToPath(import.meta.url));
 
 export default defineConfig({
-  experimental: { enableNativePlugin: true },
   build: {
     lib: {
       entry: [resolve(__dirname, "src/index.ts"), resolve(__dirname, "src/cli.ts")],
@@ -16,7 +15,7 @@ export default defineConfig({
     rolldownOptions: {
       // https://rollupjs.org/configuration-options/
       output: {
-        minify: false,
+        minify: true,
         globals: {
           "node:fs": "fs",
           "node:os": "os",
@@ -25,7 +24,7 @@ export default defineConfig({
       },
       external: (id) => !(isAbsolute(id) || id.startsWith(".")),
     },
-    minify: false,
+    // minify: true,
     reportCompressedSize: false,
   },
   test: {

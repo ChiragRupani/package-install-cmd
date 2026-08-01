@@ -1,15 +1,12 @@
 #!/usr/bin/env node
-import * as fs from "node:fs";
-import path, { dirname } from "node:path";
-import { fileURLToPath } from "node:url";
+import { version } from "../package.json" with { type: "json" };
 import { colors } from "./colorFormat.ts";
 import { Commands } from "./commands.ts";
 import { PackageFileReader } from "./packageFileReader.ts";
 
-const __dirname = dirname(fileURLToPath(import.meta.url));
-const packageJson = JSON.parse(fs.readFileSync(path.join(__dirname, "..", "package.json"), "utf8"));
-
-let version = packageJson.version;
+// const __dirname = dirname(fileURLToPath(import.meta.url));
+// const packageJson = JSON.parse(fs.readFileSync(path.join(__dirname, "..", "package.json"), "utf8"));
+// let version = packageJson.version;
 
 const helptext = {
   "--WithVersion (-wv)": "Includes version of the package",

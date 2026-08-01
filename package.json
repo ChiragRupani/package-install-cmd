@@ -1,6 +1,6 @@
 {
   "name": "@chiragrupani/package-install-cmd",
-  "version": "3.1.0",
+  "version": "3.1.1",
   "description": "Lists the dependency and dev dependency in the project and generates commands to install them using npm",
   "keywords": [
     "list dependencies",
@@ -48,12 +48,12 @@
     "package": "npm run build && npm pack"
   },
   "devDependencies": {
-    "@types/node": "^26.1.1",
+    "@types/node": "^26.1.2",
     "@vitest/coverage-v8": "^4.1.10",
-    "oxlint": "^1.73.0",
-    "oxlint-tsgolint": "^0.24.0",
+    "oxlint": "^1.76.0",
+    "oxlint-tsgolint": "^7.0.2001",
     "typescript": "^7.0.2",
-    "vite": "8.1.4",
+    "vite": "8.2.0",
     "vitest": "^4.1.10"
   },
   "devEngines": {
