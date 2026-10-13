@@ -48,13 +48,13 @@
     "package": "npm run build && npm pack"
   },
   "devDependencies": {
-    "@types/node": "^26.4.1",
-    "@vitest/coverage-v8": "^4.1.11",
-    "oxlint": "^1.81.0",
-    "oxlint-tsgolint": "^7.0.2001",
+    "@types/node": "^26.6.5",
+    "@vitest/coverage-v8": "^5.0.4",
+    "oxlint": "^1.87.0",
+    "oxlint-tsgolint": "^7.0.2004",
     "typescript": "^7.0.2",
-    "vite": "8.2.2",
-    "vitest": "^4.1.11"
+    "vite": "8.3.4",
+    "vitest": "^5.0.4"
   },
   "devEngines": {
     "runtime": {
